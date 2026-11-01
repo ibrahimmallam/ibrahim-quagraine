@@ -141,3 +141,18 @@
     }
   }
 })();
+
+(function () {
+  document.querySelectorAll('.yt[data-yt]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      var f = document.createElement('iframe');
+      f.src = 'https://www.youtube-nocookie.com/embed/' + a.dataset.yt + '?autoplay=1&rel=0';
+      f.title = 'Cocoa Potash pitch video';
+      f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+      f.allowFullscreen = true;
+      a.replaceWith(Object.assign(document.createElement('div'), { className: 'yt' }));
+      document.querySelector('.watch__grid .yt:not([data-yt])').appendChild(f);
+    });
+  });
+})();
