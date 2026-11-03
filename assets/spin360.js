@@ -1,7 +1,9 @@
 /* Drag-to-rotate viewer for a pre-rendered 360-degree image sequence.
    Markup: <div class="spin" data-src="path/line-{i}.webp" data-src-sm="path/sm/line-{i}.webp" data-n="72" tabindex="0" role="img" aria-label="..."><img src="path/line-00.webp" alt=""></div>
    Frames load once the viewer scrolls into view. It turns slowly until someone drags, then resumes after a pause.
-   Arrow keys step through frames. Reduced-motion users get no auto-turn. */
+   Arrow keys step through frames. Reduced-motion users get no auto-turn.
+   Optional numbered pins: data-pins="path/pins.json" ({frame: [[x, y], ...]} as fractions of the 16:9 frame)
+   and data-pin-labels="01,02,03". Pins follow the stages as the view turns. */
 (function () {
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function pad(i) { return i < 10 ? '0' + i : '' + i; }
@@ -13,11 +15,31 @@
     var frames = new Array(n), loaded = 0, cur = 0, pos = 0, vel = 0;
     var dragging = false, lastX = 0, lastT = 0, idleUntil = 0, raf = 0, visible = false;
     function src(i) { return tpl.replace('{i}', pad(i)); }
+    var pinData = null, pins = [];
+    if (el.dataset.pins) {
+      (el.dataset.pinLabels || '').split(',').forEach(function (t, k) {
+        var p = document.createElement('span'); p.className = 'spin-pin'; p.dataset.pin = k + 1; p.textContent = t.trim();
+        p.setAttribute('aria-hidden', 'true'); el.appendChild(p); pins.push(p);
+      });
+      fetch(el.dataset.pins).then(function (r) { return r.json(); }).then(function (d) { pinData = d; place(); }).catch(function () {});
+      window.addEventListener('resize', function () { place(); });
+    }
+    function place() {
+      if (!pinData || !pins.length) return;
+      var P = pinData[cur] || pinData[String(cur)]; if (!P) return;
+      var w = el.clientWidth, h = el.clientHeight, ar = 16 / 9;
+      var iw = Math.max(w, h * ar), ih = iw / ar, ox = (w - iw) / 2, oy = (h - ih) / 2;   // object-fit: cover
+      pins.forEach(function (p, k) {
+        if (!P[k]) return;
+        p.style.transform = 'translate(' + (ox + P[k][0] * iw).toFixed(1) + 'px,' + (oy + P[k][1] * ih).toFixed(1) + 'px) translate(-50%,-50%)';
+        p.classList.add('is-on');
+      });
+    }
     function show(i) {
       i = ((i % n) + n) % n;
       if (i === cur && img.dataset.f) return;
       var f = frames[i];
-      if (f && f.complete && f.naturalWidth) { img.src = f.src; img.dataset.f = 1; cur = i; }
+      if (f && f.complete && f.naturalWidth) { img.src = f.src; img.dataset.f = 1; cur = i; place(); }
     }
     function load() {
       for (var k = 0; k < n; k++) {
