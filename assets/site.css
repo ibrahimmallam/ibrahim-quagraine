@@ -85,6 +85,11 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .founder .title em{color:var(--teal-3)}
 .film{position:relative;margin:0 0 12px;border-radius:26px;overflow:hidden;aspect-ratio:16/8;background:var(--dark-2)}
 .film video{width:100%;height:100%;object-fit:cover}
+.spin{width:100%;height:100%;cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.spin.is-drag{cursor:grabbing}
+.spin img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.film figcaption{pointer-events:none}
+.spin-chip{display:inline-flex;align-items:center;gap:6px;color:#fff}
 .film figcaption{position:absolute;left:16px;right:16px;bottom:16px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .film figcaption span{font:500 13px/1 var(--body);background:rgba(13,14,13,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:10px 14px;border-radius:999px}
 .film figcaption span:first-child{background:var(--teal);color:#fff;font-weight:600}

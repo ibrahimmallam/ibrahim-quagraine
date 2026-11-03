@@ -81,8 +81,8 @@
       </div>
 
       <figure class="film">
-        <video autoplay muted loop playsinline preload="metadata" poster="assets/img/mm-loop-poster.webp" aria-label="3D fly-through of the Cocoa Potash multi-mineral modular line"><source src="assets/img/mm-loop.mp4" type="video/mp4"></video>
-        <figcaption><span>Multi-mineral line</span><span>Four recovery trains on skids</span></figcaption>
+        <div class="spin" data-src="assets/spin/line-{i}.webp" data-src-sm="assets/spin/sm/line-{i}.webp" data-n="72" tabindex="0" role="img" aria-label="360-degree rendering of the Cocoa Potash multi-mineral modular line. Drag or use the arrow keys to turn it."><img src="assets/spin/line-00.webp" alt="" width="1600" height="900" draggable="false"></div>
+        <figcaption><span>Multi-mineral line</span><span class="spin-chip" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 12c0-2.2 4-4 9-4s9 1.8 9 4-4 4-9 4"/><path d="M9 13l3 3-3 3"/></svg>360&deg;</span></figcaption>
       </figure>
 
       <div class="bento">
@@ -261,6 +261,7 @@
 </main>
 
 <dialog class="lightbox" id="lightbox"><img alt=""></dialog>
+<script src="assets/spin360.js" defer></script>
 <script src="assets/site.js" defer></script>
 </body>
 </html>
