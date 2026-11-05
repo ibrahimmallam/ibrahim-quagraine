@@ -263,6 +263,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .about__p{font:400 clamp(16px,1.4vw,19px)/1.6 var(--body);color:rgba(255,255,255,.9);max-width:60ch;margin:0 0 28px;text-shadow:0 1px 12px rgba(0,0,0,.45)}
 @media (max-width:860px){.watch__grid{grid-template-columns:1fr}}
 .watch__clips{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2vw,28px);margin-top:clamp(32px,4vw,56px)}
+.watch__clips--one{grid-template-columns:1fr}
 .clip{margin:0}
 .clip video{display:block;width:100%;height:auto;aspect-ratio:16/9;border-radius:14px;background:#e9eeeb;object-fit:cover}
 .clip figcaption{font:600 13px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--teal);margin-top:12px}
